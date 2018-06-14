@@ -8,8 +8,8 @@ Date: 6/13/18
 import pandas as pd
 from sklearn.preprocessing import StandardScaler, LabelBinarizer
 from sklearn.ensemble import RandomForestClassifier
-# from sklearn.cross_validation import train_test_split, ShuffleSplit
 from sklearn.model_selection import cross_val_score, train_test_split, ShuffleSplit
+from sklearn.metrics import accuracy_score
 
 if __name__ == "__main__":
     df = pd.read_csv('train.csv')
@@ -34,7 +34,7 @@ if __name__ == "__main__":
     X = scaler.fit_transform(titanic)
 
     # breaks up the data so we can train and test it
-    X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     # initialize classifier and fit
     """
@@ -53,13 +53,17 @@ if __name__ == "__main__":
                         on each fold. You then get the average and 
                         std Dev of scores
     """
-    shuffle_validator = ShuffleSplit(20, train_size= 0.8, test_size=0.2, random_state=42)
-    scores = cross_val_score(clf, X, y, cv=shuffle_validator)
+    shuffle_validator = ShuffleSplit(20, train_size= 0.8, test_size=0.2, random_state=0)
+    scores = cross_val_score(clf, X_train, y_train, cv=shuffle_validator)
     print("Accuracy: %0.4f (+/- %0.2f)" % (scores.mean(), scores.std()))
 
 
 
-
+    # This actually checks the average score on test set
+    # If number here is off really off from accuracy (above),
+    # then you know the model is overfitting
+    predictions = clf.predict(X_test)
+    print(accuracy_score(y_test, predictions))
 
 
 
