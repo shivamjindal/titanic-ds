@@ -8,7 +8,7 @@ Date: 6/13/18
 import pandas as pd
 from sklearn.preprocessing import StandardScaler, LabelBinarizer
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import cross_val_score, train_test_split, ShuffleSplit
+from sklearn.model_selection import cross_val_score, train_test_split, ShuffleSplit, GridSearchCV
 from sklearn.metrics import accuracy_score
 
 if __name__ == "__main__":
@@ -41,11 +41,11 @@ if __name__ == "__main__":
      Random Forest Classifier works by making multiple decision trees
      and merging them together
     """
-    clf = RandomForestClassifier()
+    clf = RandomForestClassifier(bootstrap=True, max_features=2, n_estimators=20)
     clf.fit(X_train, y_train)
 
 
-    # Get Accuracy
+    # Get Accuracy on train set
     """
      Shuffle Split - yields indices for training and testing
      cross_val_score - Uses standard k-fold cross validatoin
@@ -64,6 +64,17 @@ if __name__ == "__main__":
     predictions = clf.predict(X_test)
     print(accuracy_score(y_test, predictions))
 
+
+    """
+     This is a method to help figure out the best parameters for the model
+     Using this, I got off the default parameters, and managed to bring average 
+     up
+    """
+    # param_grid = [{'n_estimators': [5,10,15,20], 'max_features':[2,4,6], 'bootstrap':[True, False]}]
+    # clf2 = RandomForestClassifier()
+    # grid_search = GridSearchCV(clf2, param_grid, cv=5, scoring='neg_mean_squared_error')
+    # grid_search.fit(X, y)
+    # print(grid_search.best_params_)
 
 
 
