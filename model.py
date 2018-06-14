@@ -58,7 +58,6 @@ if __name__ == "__main__":
     print("Accuracy: %0.4f (+/- %0.2f)" % (scores.mean(), scores.std()))
 
 
-
     # This actually checks the average score on test set
     # If number here is off really off from accuracy (above),
     # then you know the model is overfitting
