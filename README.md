@@ -12,8 +12,10 @@ Shivam Jindal
 
 ## How it works
 Most of it is commented in the model.py file itself. It first opens the file. From there, the program drops seemingly unneccessary columns (name, Ticket, Embarked, and Cabin), and sets the rest of the data into features and labels. The features are then preprocessed such that: 
-    * Sex is changed from categorical data (male or female) to numerical data (0 or 1)
-    * All features are standardized
+
+
+  * Sex is changed from categorical data (male or female) to numerical data (0 or 1)
+  * All features are standardized
 From there, the data is split into a train set and test set and validated. 
 
 The score tends to be around 0.79 with a standard deviation of either 0.02 or 0.03
